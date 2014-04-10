@@ -7,6 +7,7 @@
         beginning-of-buffer
         beginning-of-defun
         c-electric-delete-forward
+        comint-delchar-or-maybe-eof
         end-of-buffer
         end-of-defun
         forward-sexp
@@ -19,6 +20,7 @@
         sp--self-insert-command
         sp-backward-delete-char
         sp-backward-sexp
+        sp-delete-char
         sp-down-sexp
         sp-forward-sexp
         yaml-electric-backspace
