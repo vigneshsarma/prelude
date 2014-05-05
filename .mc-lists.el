@@ -13,6 +13,8 @@
         forward-sexp
         indent-for-tab-command
         kill-region
+        magit-discard-item
+        magit-stage-item
         ns-copy-including-secondary
         prelude-move-beginning-of-line
         python-indent-electric-colon
@@ -24,8 +26,10 @@
         sp-down-sexp
         sp-forward-sexp
         yaml-electric-backspace
+        yaml-electric-dash-and-dot
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        magit-status
         ))
