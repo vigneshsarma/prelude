@@ -25,8 +25,10 @@
 
 (set-frame-font "Monaco-12")
 (disable-theme 'zenburn)
-(load-theme 'solarized-light)
+(load-theme 'solarized-dark)
 (display-time)
 
 ;; Full screen emacs
 (toggle-frame-fullscreen)
+
+(global-set-key (kbd "s-A") 'ag-project-files)
