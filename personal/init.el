@@ -9,7 +9,7 @@
 
 (prelude-ensure-module-deps '(jade-mode multiple-cursors go-mode
                                         js2-mode solarized-theme
-                                        sublime-themes))
+                                        sublime-themes jedi))
 (require 'multiple-cursors)
 ;; (global-unset-key (kbd "M-<down-mouse-1>"))
 ;; (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
@@ -28,7 +28,10 @@
 (load-theme 'solarized-dark)
 (display-time)
 
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
 ;; Full screen emacs
 (toggle-frame-fullscreen)
 
 (global-set-key (kbd "s-A") 'ag-project-files)
+(global-set-key (kbd "C-c SPC") 'ace-jump-mode)

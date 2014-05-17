@@ -17,6 +17,7 @@
         magit-stage-item
         ns-copy-including-secondary
         prelude-move-beginning-of-line
+        prelude-top-join-line
         python-indent-electric-colon
         smex
         sp--self-insert-command
