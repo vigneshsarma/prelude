@@ -7,9 +7,10 @@
 (setq slime-default-lisp 'sbcl)
 ;(setq inferior-lisp-program "sbcl")
 
-(prelude-ensure-module-deps '(jade-mode multiple-cursors go-mode
-                                        js2-mode solarized-theme
-                                        sublime-themes jedi))
+(prelude-ensure-module-deps '(stylus-mode multiple-cursors go-mode
+                                          js2-mode solarized-theme
+                                          sublime-themes jedi
+                                          ido-vertical-mode))
 (require 'multiple-cursors)
 ;; (global-unset-key (kbd "M-<down-mouse-1>"))
 ;; (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
@@ -22,11 +23,13 @@
 (require 'js2-mode)
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(require 'stylus-mode)
+(add-to-list 'auto-mode-alist '("\\.jade$" . stylus-mode))
 
 (set-frame-font "Monaco-12")
 (disable-theme 'zenburn)
 (load-theme 'solarized-dark)
-(display-time)
+;; (display-time)
 
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)
@@ -35,3 +38,7 @@
 
 (global-set-key (kbd "s-A") 'ag-project-files)
 (global-set-key (kbd "C-c SPC") 'ace-jump-mode)
+
+(require 'ido-vertical-mode)
+;; (ido-mode 1)
+(ido-vertical-mode 1)

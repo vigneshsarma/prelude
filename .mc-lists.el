@@ -19,6 +19,7 @@
         prelude-move-beginning-of-line
         prelude-top-join-line
         python-indent-electric-colon
+        scroll-other-window
         smex
         sp--self-insert-command
         sp-backward-delete-char
@@ -26,6 +27,7 @@
         sp-delete-char
         sp-down-sexp
         sp-forward-sexp
+        sp-remove-active-pair-overlay
         yaml-electric-backspace
         yaml-electric-dash-and-dot
         ))

@@ -36,7 +36,7 @@
           (lambda ()
             (define-key python-mode-map (kbd "C-S-<tab>")
               'balle-python-shift-right)
-            (define-key python-mode-map (kbd "C-<tab>")
+            (define-key python-mode-map (kbd "C-M-S-<tab>")
               'balle-python-shift-left)))
 
 ;;; python-shift.el ends here
