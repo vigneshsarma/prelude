@@ -10,7 +10,8 @@
 (prelude-ensure-module-deps '(stylus-mode multiple-cursors go-mode
                                           js2-mode solarized-theme
                                           sublime-themes jedi
-                                          ido-vertical-mode))
+                                          ido-vertical-mode
+                                          tuareg virtualenvwrapper))
 (require 'multiple-cursors)
 ;; (global-unset-key (kbd "M-<down-mouse-1>"))
 ;; (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
@@ -42,3 +43,20 @@
 (require 'ido-vertical-mode)
 ;; (ido-mode 1)
 (ido-vertical-mode 1)
+
+(require 's)
+(require 'eshell)
+(setq eshell-prompt-function
+      (lambda ()
+        (concat (if (s-blank? venv-current-name)
+                    ""
+                    (concat "(" venv-current-name ") "))
+                (car (last (s-split "/" (eshell/pwd)))) " $ ")))
+
+(require 'virtualenvwrapper)
+(venv-initialize-interactive-shells) ;; if you want interactive shell support
+(venv-initialize-eshell) ;; if you want eshell support
+(setq venv-location "/Users/vigneshsarma/Envs")
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")

@@ -5,7 +5,7 @@
 ;; Installation-Instructions#using-emacs24-packages
 
 ;;; Code:
-(add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
+;; (add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
 (setq auto-mode-alist
       (append '(("\\.ml[ily]?$" . tuareg-mode)
                 ("\\.topml$" . tuareg-mode))

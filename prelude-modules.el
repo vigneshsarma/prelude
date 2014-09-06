@@ -12,7 +12,7 @@
 (require 'prelude-emacs-lisp)
 (require 'prelude-erc) ;; Emacs IRC client
 ;; (require 'prelude-erlang)
-;; (require 'prelude-haskell)
+(require 'prelude-haskell)
 (require 'prelude-js)
 ;; (require 'prelude-key-chord) ;; Binds useful features to key combinations
 ;; (require 'prelude-latex)
