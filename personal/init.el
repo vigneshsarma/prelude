@@ -39,6 +39,7 @@
 
 (global-set-key (kbd "s-A") 'ag-project-files)
 (global-set-key (kbd "C-c SPC") 'ace-jump-mode)
+(setq ag-highlight-search t)
 
 (require 'ido-vertical-mode)
 ;; (ido-mode 1)

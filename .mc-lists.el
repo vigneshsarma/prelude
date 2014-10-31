@@ -8,6 +8,7 @@
         beginning-of-defun
         c-electric-delete-forward
         comint-delchar-or-maybe-eof
+        electric-newline-and-maybe-indent
         end-of-buffer
         end-of-defun
         forward-sexp
@@ -18,6 +19,7 @@
         ns-copy-including-secondary
         prelude-move-beginning-of-line
         prelude-top-join-line
+        puppet-interpolate
         python-indent-electric-colon
         scroll-other-window
         smex
