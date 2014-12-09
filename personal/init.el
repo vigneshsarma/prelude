@@ -12,6 +12,9 @@
                                           sublime-themes jedi
                                           ido-vertical-mode
                                           tuareg virtualenvwrapper))
+
+(global-set-key [remap move-beginning-of-line]
+                'move-beginning-of-line)
 (require 'multiple-cursors)
 ;; (global-unset-key (kbd "M-<down-mouse-1>"))
 ;; (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
@@ -24,12 +27,19 @@
 (require 'js2-mode)
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-hook 'js-mode-hook (lambda () (tern-mode t)))
+(eval-after-load 'tern
+  '(progn
+     (require 'tern-auto-complete)
+     (tern-ac-setup)))
+
 (require 'stylus-mode)
 (add-to-list 'auto-mode-alist '("\\.jade$" . stylus-mode))
 
 (set-frame-font "Monaco-12")
 (disable-theme 'zenburn)
-(load-theme 'solarized-dark)
+;; (load-theme 'solarized-dark)
+(load-theme 'sanityinc-tomorrow-eighties)
 ;; (display-time)
 
 (add-hook 'python-mode-hook 'jedi:setup)
@@ -41,6 +51,7 @@
 (global-set-key (kbd "C-c SPC") 'ace-jump-mode)
 (setq ag-highlight-search t)
 
+(setq flx-ido-threshhold 5000)
 (require 'ido-vertical-mode)
 ;; (ido-mode 1)
 (ido-vertical-mode 1)
