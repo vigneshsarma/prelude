@@ -11,17 +11,22 @@
         electric-newline-and-maybe-indent
         end-of-buffer
         end-of-defun
+        forward-sentence
         forward-sexp
+        god-mode-self-insert
         indent-for-tab-command
         kill-region
         magit-discard-item
         magit-stage-item
         ns-copy-including-secondary
+        org-self-insert-command
         prelude-move-beginning-of-line
         prelude-top-join-line
         puppet-interpolate
         python-indent-electric-colon
         scroll-other-window
+        slime-autodoc-space
+        slime-indent-and-complete-symbol
         smex
         sp--self-insert-command
         sp-backward-delete-char
@@ -36,5 +41,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+        ido-switch-buffer
+        isearch-backward-regexp
         magit-status
         ))

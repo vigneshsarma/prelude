@@ -5,6 +5,7 @@
 (scroll-bar-mode -1)
 
 (setq slime-default-lisp 'sbcl)
+(setq slime-contribs '(slime-fancy))
 ;(setq inferior-lisp-program "sbcl")
 
 (prelude-ensure-module-deps '(stylus-mode multiple-cursors go-mode
@@ -39,10 +40,13 @@
 (set-frame-font "Monaco-12")
 (disable-theme 'zenburn)
 ;; (load-theme 'solarized-dark)
-(load-theme 'sanityinc-tomorrow-eighties)
+;; (load-theme 'sanityinc-tomorrow-eighties)
 ;; (display-time)
 
 (add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'python-mode-hook (lambda ()
+                              (require 'sphinx-doc)
+                              (sphinx-doc-mode t)))
 (setq jedi:complete-on-dot t)
 ;; Full screen emacs
 (toggle-frame-fullscreen)
@@ -51,7 +55,8 @@
 (global-set-key (kbd "C-c SPC") 'ace-jump-mode)
 (setq ag-highlight-search t)
 
-(setq flx-ido-threshhold 5000)
+(setq flx-ido-threshold 1000)
+
 (require 'ido-vertical-mode)
 ;; (ido-mode 1)
 (ido-vertical-mode 1)
@@ -72,3 +77,14 @@
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
+
+(defun python-insert-encoding-at-point()
+  (interactive)
+  (insert "# -*- coding: utf-8 -*-"))
+
+(define-key projectile-mode-map [?\s-f] 'projectile-find-file)
+
+(add-hook 'html-mode-hook
+          (lambda()
+            (setq sgml-basic-offset 4)
+            (setq indent-tabs-mode nil)))
