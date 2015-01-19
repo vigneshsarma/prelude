@@ -14,6 +14,7 @@
         forward-sentence
         forward-sexp
         god-mode-self-insert
+        haskell-indentation-delete-backward-char
         indent-for-tab-command
         kill-region
         magit-discard-item
