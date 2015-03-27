@@ -11,7 +11,10 @@
 (prelude-ensure-module-deps '(stylus-mode multiple-cursors go-mode
                                           js2-mode solarized-theme
                                           sublime-themes jedi
+                                          color-theme-sanityinc-tomorrow
+                                          sphinx-doc ag rvm
                                           ido-vertical-mode
+                                          tern tern-auto-complete
                                           tuareg virtualenvwrapper))
 
 (global-set-key [remap move-beginning-of-line]
@@ -40,13 +43,14 @@
 (set-frame-font "Monaco-12")
 (disable-theme 'zenburn)
 ;; (load-theme 'solarized-dark)
-;; (load-theme 'sanityinc-tomorrow-eighties)
+(load-theme 'sanityinc-tomorrow-eighties)
 ;; (display-time)
 
-(add-hook 'python-mode-hook 'jedi:setup)
+;; (add-hook 'python-mode-hook 'jedi:setup)
 (add-hook 'python-mode-hook (lambda ()
                               (require 'sphinx-doc)
-                              (sphinx-doc-mode t)))
+                              (sphinx-doc-mode t)
+                              (anaconda-mode t)))
 (setq jedi:complete-on-dot t)
 ;; Full screen emacs
 (toggle-frame-fullscreen)
@@ -88,3 +92,7 @@
           (lambda()
             (setq sgml-basic-offset 4)
             (setq indent-tabs-mode nil)))
+
+;; SaltStack
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))

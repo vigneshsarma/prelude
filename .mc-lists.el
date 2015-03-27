@@ -8,11 +8,13 @@
         beginning-of-defun
         c-electric-delete-forward
         comint-delchar-or-maybe-eof
+        downcase-region
         electric-newline-and-maybe-indent
         end-of-buffer
         end-of-defun
         forward-sentence
         forward-sexp
+        go-mode-insert-and-indent
         god-mode-self-insert
         haskell-indentation-delete-backward-char
         indent-for-tab-command
@@ -35,7 +37,9 @@
         sp-delete-char
         sp-down-sexp
         sp-forward-sexp
+        sp-kill-word
         sp-remove-active-pair-overlay
+        sp-splice-sexp
         yaml-electric-backspace
         yaml-electric-dash-and-dot
         ))
