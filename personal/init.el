@@ -3,11 +3,6 @@
 ;;; Install required packages, set them up for use.
 ;;; code:
 (scroll-bar-mode -1)
-
-(setq slime-default-lisp 'sbcl)
-(setq slime-contribs '(slime-fancy))
-;(setq inferior-lisp-program "sbcl")
-
 (prelude-ensure-module-deps '(stylus-mode multiple-cursors go-mode
                                           js2-mode solarized-theme
                                           sublime-themes jedi
@@ -15,6 +10,9 @@
                                           sphinx-doc ag rvm
                                           ido-vertical-mode
                                           tern tern-auto-complete
+                                          yaml-mode anaconda-mode
+                                          helm helm-projectile helm-ag
+                                          hl-sexp
                                           tuareg virtualenvwrapper))
 
 (global-set-key [remap move-beginning-of-line]
@@ -77,7 +75,7 @@
 (require 'virtualenvwrapper)
 (venv-initialize-interactive-shells) ;; if you want interactive shell support
 (venv-initialize-eshell) ;; if you want eshell support
-(setq venv-location "/Users/vigneshsarma/Envs")
+(setq venv-location "/Users/vignesh/.venvs")
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
@@ -96,3 +94,19 @@
 ;; SaltStack
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))
+
+;; emacs from comandline
+(x-focus-frame nil)
+
+;; lisp
+(setq slime-default-lisp 'sbcl)
+(setq slime-contribs '(slime-fancy))
+;(setq inferior-lisp-program "sbcl")
+
+(require 'hl-sexp)
+;; (custom-set-faces
+;;  `(hl-sexp-face ((t (:background ,(-> (face-attribute 'highlight :background)
+;;                                       (color-lighten-name 6)))))))
+(add-hook 'lisp-mode-hook 'hl-sexp-mode)
+(add-hook 'emacs-lisp-mode-hook 'hl-sexp-mode)
+(add-hook 'clojure-mode-hook 'hl-sexp-mode)
