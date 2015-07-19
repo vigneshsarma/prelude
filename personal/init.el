@@ -104,9 +104,10 @@
 ;(setq inferior-lisp-program "sbcl")
 
 (require 'hl-sexp)
-;; (custom-set-faces
-;;  `(hl-sexp-face ((t (:background ,(-> (face-attribute 'highlight :background)
-;;                                       (color-lighten-name 6)))))))
+(require 'color)
+(custom-set-faces
+ `(hl-sexp-face ((t (:background ,(-> (face-attribute 'highlight :background)
+                                      (color-lighten-name 6)))))))
 (add-hook 'lisp-mode-hook 'hl-sexp-mode)
 (add-hook 'emacs-lisp-mode-hook 'hl-sexp-mode)
 (add-hook 'clojure-mode-hook 'hl-sexp-mode)
