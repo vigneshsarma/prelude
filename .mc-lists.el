@@ -6,23 +6,32 @@
         backward-sexp
         beginning-of-buffer
         beginning-of-defun
+        c-electric-brace
         c-electric-delete-forward
+        c-electric-semi&comma
         comint-delchar-or-maybe-eof
         downcase-region
         electric-newline-and-maybe-indent
         end-of-buffer
         end-of-defun
+        eval-print-last-sexp
         forward-sentence
         forward-sexp
         go-mode-insert-and-indent
         god-mode-self-insert
         haskell-indentation-delete-backward-char
+        ibuffer-mark-for-delete
         indent-for-tab-command
         kill-region
         magit-discard-item
         magit-stage-item
+        magit-unstage-item
         ns-copy-including-secondary
+        org-beginning-of-line
+        org-delete-char
+        org-end-of-line
         org-self-insert-command
+        org-todo
         prelude-move-beginning-of-line
         prelude-top-join-line
         puppet-interpolate
@@ -40,12 +49,14 @@
         sp-kill-word
         sp-remove-active-pair-overlay
         sp-splice-sexp
+        toggle-comment-region
         yaml-electric-backspace
         yaml-electric-dash-and-dot
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        ido-find-file
         ido-switch-buffer
         isearch-backward-regexp
         magit-status
