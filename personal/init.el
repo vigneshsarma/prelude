@@ -3,17 +3,18 @@
 ;;; Install required packages, set them up for use.
 ;;; code:
 (scroll-bar-mode -1)
-(prelude-ensure-module-deps '(stylus-mode multiple-cursors go-mode
-                                          js2-mode solarized-theme
-                                          sublime-themes jedi
-                                          color-theme-sanityinc-tomorrow
-                                          sphinx-doc ag rvm
-                                          ido-vertical-mode
-                                          tern tern-auto-complete
-                                          yaml-mode anaconda-mode
-                                          helm helm-projectile helm-ag
-                                          hl-sexp
-                                          tuareg virtualenvwrapper))
+(prelude-ensure-module-deps
+ '(stylus-mode multiple-cursors go-mode js2-mode jedi
+               sphinx-doc ag rvm ido-vertical-mode tern tern-auto-complete
+               yaml-mode anaconda-mode helm helm-projectile helm-ag
+               hl-sexp tuareg virtualenvwrapper smart-mode-line rich-minority
+
+               ;; themes
+               noctilux-theme color-theme-sanityinc-tomorrow
+               solarized-theme sublime-themes gotham-theme ujelly-theme
+               arjen-grey-theme flatland-theme subatomic-theme
+
+))
 
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
@@ -40,8 +41,8 @@
 
 (set-frame-font "Monaco-12")
 (disable-theme 'zenburn)
-;; (load-theme 'solarized-dark)
-(load-theme 'sanityinc-tomorrow-eighties)
+(load-theme 'noctilux)
+;; (load-theme 'sanityinc-tomorrow-eighties)
 ;; (display-time)
 
 ;; (add-hook 'python-mode-hook 'jedi:setup)
@@ -111,3 +112,7 @@
 (add-hook 'lisp-mode-hook 'hl-sexp-mode)
 (add-hook 'emacs-lisp-mode-hook 'hl-sexp-mode)
 (add-hook 'clojure-mode-hook 'hl-sexp-mode)
+
+(require 'rich-minority)
+(rich-minority-mode 1)
+(setq rm-blacklist (mapconcat 'identity (list "ws" "guru" "company") "\\|"))
