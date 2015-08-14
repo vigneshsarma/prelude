@@ -41,7 +41,7 @@
 
 (set-frame-font "Monaco-12")
 (disable-theme 'zenburn)
-(load-theme 'noctilux)
+(load-theme 'subatomic)
 ;; (load-theme 'sanityinc-tomorrow-eighties)
 ;; (display-time)
 
@@ -108,11 +108,11 @@
 (require 'color)
 (custom-set-faces
  `(hl-sexp-face ((t (:background ,(-> (face-attribute 'highlight :background)
-                                      (color-lighten-name 6)))))))
+                                      (color-lighten-name 4)))))))
 (add-hook 'lisp-mode-hook 'hl-sexp-mode)
 (add-hook 'emacs-lisp-mode-hook 'hl-sexp-mode)
 (add-hook 'clojure-mode-hook 'hl-sexp-mode)
 
 (require 'rich-minority)
 (rich-minority-mode 1)
-(setq rm-blacklist (mapconcat 'identity (list "ws" "guru" "company") "\\|"))
+(setq rm-blacklist (mapconcat 'identity (list "ws" "guru" "company" "Pre") "\\|"))
