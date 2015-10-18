@@ -8,12 +8,14 @@
                sphinx-doc ag rvm ido-vertical-mode tern tern-auto-complete
                yaml-mode anaconda-mode helm helm-projectile helm-ag
                hl-sexp tuareg virtualenvwrapper smart-mode-line rich-minority
+               restclient yasnippet paradox
 
                ;; themes
                noctilux-theme color-theme-sanityinc-tomorrow
                solarized-theme sublime-themes gotham-theme ujelly-theme
                arjen-grey-theme flatland-theme subatomic-theme
-
+               twilight-bright-theme twilight-anti-bright-theme
+               darktooth-theme
 ))
 
 (global-set-key [remap move-beginning-of-line]
@@ -53,6 +55,10 @@
 (setq jedi:complete-on-dot t)
 ;; Full screen emacs
 (toggle-frame-fullscreen)
+
+;; emacs from comandline
+(x-focus-frame nil)
+(setq ns-pop-up-frames nil)
 
 (global-set-key (kbd "s-A") 'ag-project-files)
 (global-set-key (kbd "C-c SPC") 'ace-jump-mode)
@@ -116,3 +122,9 @@
 (require 'rich-minority)
 (rich-minority-mode 1)
 (setq rm-blacklist (mapconcat 'identity (list "ws" "guru" "company" "Pre") "\\|"))
+;; Org Mode
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (visual-line-mode)
+            (whitespace-mode -1)))
