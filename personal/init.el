@@ -4,50 +4,55 @@
 ;;; code:
 (scroll-bar-mode -1)
 (prelude-ensure-module-deps
- '(stylus-mode multiple-cursors go-mode js2-mode jedi
-               sphinx-doc ag rvm ido-vertical-mode tern tern-auto-complete
-               yaml-mode anaconda-mode helm helm-projectile helm-ag
-               hl-sexp tuareg virtualenvwrapper smart-mode-line rich-minority
-               restclient yasnippet
-               ;; paradox
-               elm-mode wsd-mode irony
+ '(use-package js2-mode jedi
+    sphinx-doc ag rvm ido-vertical-mode tern tern-auto-complete
+    yaml-mode anaconda-mode helm helm-projectile helm-ag
+    hl-sexp tuareg virtualenvwrapper smart-mode-line rich-minority
+    restclient yasnippet intero
+    paradox elm-mode wsd-mode irony ranger
 
-               ;; themes
-               noctilux-theme color-theme-sanityinc-tomorrow
-               solarized-theme sublime-themes gotham-theme ujelly-theme
-               arjen-grey-theme flatland-theme subatomic-theme
-               twilight-bright-theme twilight-anti-bright-theme
-               darktooth-theme bubbleberry-theme aurora-theme
-               dracula-theme
-))
+    ;; themes
+    noctilux-theme color-theme-sanityinc-tomorrow
+    solarized-theme sublime-themes gotham-theme ujelly-theme
+    arjen-grey-theme flatland-theme subatomic-theme
+    twilight-bright-theme twilight-anti-bright-theme
+    darktooth-theme bubbleberry-theme aurora-theme
+    dracula-theme
+    ))
 
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
-(require 'multiple-cursors)
+
+(setq use-package-always-ensure t)
+
+(use-package multiple-cursors
+  :defer t
+  :bind (("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
+
 ;; (global-unset-key (kbd "M-<down-mouse-1>"))
 ;; (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
 
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(use-package go-mode
+  :defer t)
 
 (require 'js2-mode)
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . rjsx-mode))
+
 ;; (add-hook 'js-mode-hook (lambda () (tern-mode t)))
 ;; (eval-after-load 'tern
 ;;   '(progn
 ;;      (require 'tern-auto-complete)
 ;;      (tern-ac-setup)))
 
-(require 'stylus-mode)
-(add-to-list 'auto-mode-alist '("\\.jade$" . stylus-mode))
-
 ;; (set-face-attribute 'default nil :height 125 :family "Source Code Pro")
 ;; (set-frame-font "Fira-mono-12")
 ;; (set-frame-font "Hack-12")
-(set-frame-font "Menlo-12")
+(set-frame-font "Monaco-14")
 ;; (set-face-attribute 'default nil :height 135 :family "Anonymous Pro")
 ;; (set-frame-font "Consolas-13")
 ;; (set-frame-font "Monaco-12")
@@ -72,7 +77,7 @@
 (setq ns-pop-up-frames nil)
 
 (global-set-key (kbd "s-A") 'ag-project-files)
-(global-set-key (kbd "C-c SPC") 'avy-goto-char)
+(global-set-key (kbd "C-c C-SPC") 'avy-goto-char)
 (setq ag-highlight-search t)
 
 (setq flx-ido-threshold 1000)
@@ -175,10 +180,46 @@
             (visual-line-mode)
             (whitespace-mode -1)))
 
+;; Paradox
+(setq paradox-github-token t) ;;"dd4cf72ae0215d68438f42a811ebffe025f6f9df"
+
 (setq-default indent-tabs-mode nil)
 
 ;; svn find file projectile overide.
 (custom-set-variables '(projectile-svn-command "find . -type f -print0"))
+
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+
+(setq racer-cmd "/Users/vigneshS/.cargo/bin/racer")
+(setq racer-rust-src-path "/Users/vigneshS/code/rust/src/")
+
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'rust-mode-hook (lambda ()
+                            (define-key rust-mode-map (kbd "C-c C-c") 'recompile)))
+(add-hook 'racer-mode-hook #'eldoc-mode)
+
+(add-hook 'racer-mode-hook #'company-mode)
+
+(setq checkdoc-package-keywords-flag nil)
+(setq checkdoc-arguments-in-order-flag nil)
+
+
+(require 'irony)
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+
+;; replace the `completion-at-point' and `complete-symbol' bindings in
+;; irony-mode's buffers by irony-mode's function
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+
+
 ;; scroll one line at a time (less "jumpy" than defaults)
 
 ;; (setq mouse-wheel-scroll-amount '(1 ((shift) . 3))) ;; one line at a time
@@ -188,3 +229,29 @@
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 
 (setq scroll-step 1) ;; keyboard scroll one line at a time
+
+;; clj refactor
+
+;; (require 'clj-refactor)
+
+;; (defun my-clojure-mode-hook ()
+;;   (clj-refactor-mode 1)
+;;   ;; (yas-minor-mode 1) ; for adding require/use/import statements
+;;   ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+;;   (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+;; (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+(setq cider-prompt-for-symbol nil)
+
+;; "ag --line-numbers -S --hidden --color --nogroup %s %s %s"
+(setq helm-grep-ag-command "rg -i --no-heading --line-number %s %s %s")
+
+;; (setq sql-port 3306) ;; default MySQL port
+
+;; (require 'ghc)
+
+;; (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+(add-hook 'haskell-mode-hook 'intero-mode)
+
+(require 'magithub)
+(magithub-feature-autoinject nil)

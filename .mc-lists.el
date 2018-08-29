@@ -14,6 +14,9 @@
         cider-eval-defun-at-point
         cider-repl-newline-and-indent
         comint-delchar-or-maybe-eof
+        crux-move-beginning-of-line
+        crux-smart-open-line
+        crux-top-join-line
         downcase-region
         electric-newline-and-maybe-indent
         end-of-buffer
