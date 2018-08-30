@@ -2,7 +2,7 @@
 
 ;; Emacs IRC client
 (require 'prelude-erc)
-(require 'prelude-ido) ;; Super charges Emacs completion for C-x C-f and more
+;; (require 'prelude-ido) ;; Super charges Emacs completion for C-x C-f and more
 ;; (require 'prelude-helm) ;; Interface for narrowing and search
 ;; (require 'prelude-helm-everywhere) ;; Enable Helm everywhere
 (require 'prelude-company)
@@ -19,7 +19,7 @@
 (require 'prelude-emacs-lisp)
 ;; (require 'prelude-erlang)
 ;; (require 'prelude-elixir)
-(require 'prelude-go)
+;; (require 'prelude-go)
 (require 'prelude-haskell)
 (require 'prelude-js)
 ;; (require 'prelude-latex)
@@ -36,3 +36,4 @@
 ;; (require 'prelude-web) ;; Emacs mode for web templates
 (require 'prelude-xml)
 (require 'prelude-yaml)
+(require 'prelude-ivy)

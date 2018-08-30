@@ -4,12 +4,12 @@
 ;;; code:
 (scroll-bar-mode -1)
 (prelude-ensure-module-deps
- '(use-package js2-mode jedi
-    sphinx-doc ag rvm ido-vertical-mode tern tern-auto-complete
-    yaml-mode anaconda-mode helm helm-projectile helm-ag
-    hl-sexp tuareg virtualenvwrapper smart-mode-line rich-minority
-    restclient yasnippet intero
-    paradox elm-mode wsd-mode irony ranger
+ '(use-package jedi
+    sphinx-doc ag rvm ido-vertical-mode
+    yaml-mode anaconda-mode helm helm-projectile helm-ag helm-rg
+    hl-sexp virtualenvwrapper smart-mode-line rich-minority
+    restclient yasnippet
+    paradox irony ranger
 
     ;; themes
     noctilux-theme color-theme-sanityinc-tomorrow
@@ -32,22 +32,13 @@
          ("C-<" . mc/mark-previous-like-this)
          ("C-c C-<" . mc/mark-all-like-this)))
 
-;; (global-unset-key (kbd "M-<down-mouse-1>"))
-;; (global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
+(use-package prodigy
+  :commands prodigy
+  :ensure t
+  :config
+  (load-file (expand-file-name "personal/prodigy-service-defs.el"
+                               user-emacs-directory)))
 
-(use-package go-mode
-  :defer t)
-
-(require 'js2-mode)
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.js$" . rjsx-mode))
-
-;; (add-hook 'js-mode-hook (lambda () (tern-mode t)))
-;; (eval-after-load 'tern
-;;   '(progn
-;;      (require 'tern-auto-complete)
-;;      (tern-ac-setup)))
 
 ;; (set-face-attribute 'default nil :height 125 :family "Source Code Pro")
 ;; (set-frame-font "Fira-mono-12")
@@ -82,9 +73,9 @@
 
 (setq flx-ido-threshold 1000)
 
-(require 'ido-vertical-mode)
-;; (ido-mode 1)
-(ido-vertical-mode 1)
+;; (require 'ido-vertical-mode)
+;; ;; (ido-mode 1)
+;; (ido-vertical-mode 1)
 
 (require 's)
 (require 'eshell)
@@ -119,13 +110,13 @@
 (add-to-list 'auto-mode-alist '("\\.sls$" . yaml-mode))
 
 ;; lisp
-(load (expand-file-name "~/.roswell/helper.el"))
+;; (load (expand-file-name "~/.roswell/helper.el"))
 ;; (setq inferior-lisp-program "ros -Q run")
-(setq slime-contribs '(slime-fancy))
-(setf slime-lisp-implementations
-      `((sbcl    ("sbcl" "--dynamic-space-size" "2000"))
-        (roswell ("ros" "-Q" "run"))))
-(setf slime-default-lisp 'roswell)
+;; (setq slime-contribs '(slime-fancy))
+;; (setf slime-lisp-implementations
+;;       `((sbcl    ("sbcl" "--dynamic-space-size" "2000"))
+;;         (roswell ("ros" "-Q" "run"))))
+;; (setf slime-default-lisp 'roswell)
 ;;(setq inferior-lisp-program "sbcl")
 
 ;; for hl-sexp
@@ -244,14 +235,6 @@
 (setq cider-prompt-for-symbol nil)
 
 ;; "ag --line-numbers -S --hidden --color --nogroup %s %s %s"
-(setq helm-grep-ag-command "rg -i --no-heading --line-number %s %s %s")
+;; (setq helm-grep-ag-command "rg -i --no-heading --line-number %s %s %s")
 
 ;; (setq sql-port 3306) ;; default MySQL port
-
-;; (require 'ghc)
-
-;; (add-hook 'haskell-mode-hook (lambda () (ghc-init)))
-(add-hook 'haskell-mode-hook 'intero-mode)
-
-(require 'magithub)
-(magithub-feature-autoinject nil)
