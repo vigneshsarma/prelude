@@ -230,3 +230,9 @@
 ;; (setq helm-grep-ag-command "rg -i --no-heading --line-number %s %s %s")
 
 ;; (setq sql-port 3306) ;; default MySQL port
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended))
