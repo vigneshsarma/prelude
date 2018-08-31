@@ -7,7 +7,7 @@
  '(use-package jedi
     sphinx-doc ag rvm ido-vertical-mode
     yaml-mode anaconda-mode helm helm-projectile helm-ag helm-rg
-    hl-sexp virtualenvwrapper smart-mode-line rich-minority
+    smart-mode-line rich-minority
     restclient yasnippet
     paradox irony ranger
 
@@ -156,11 +156,14 @@
                                               "company" ;; autocomplete
                                               "Pre" ;; prelude mode
                                               "ARev"
+                                              "hl-sexp"
+                                              "EditorConfig"
+                                              "ivy"
   ;;; auto-revert-mode, unmodifide file which are modified outside of emacs gets autoreloaded.
                                               ) "\\|"))
 
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.asp$" . web-mode))
+;; (require 'web-mode)
+;; (add-to-list 'auto-mode-alist '("\\.asp$" . web-mode))
 (setq-default c-basic-offset 2
               tab-width 2
               indent-tabs-mode 'f)
@@ -221,17 +224,6 @@
 
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
-;; clj refactor
-
-;; (require 'clj-refactor)
-
-;; (defun my-clojure-mode-hook ()
-;;   (clj-refactor-mode 1)
-;;   ;; (yas-minor-mode 1) ; for adding require/use/import statements
-;;   ;; This choice of keybinding leaves cider-macroexpand-1 unbound
-;;   (cljr-add-keybindings-with-prefix "C-c C-m"))
-
-;; (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 (setq cider-prompt-for-symbol nil)
 
 ;; "ag --line-numbers -S --hidden --color --nogroup %s %s %s"
