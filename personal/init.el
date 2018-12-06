@@ -6,22 +6,24 @@
 (prelude-ensure-module-deps
  '(use-package jedi
     sphinx-doc ag rvm ido-vertical-mode
-    yaml-mode anaconda-mode helm helm-projectile helm-ag helm-rg
+    yaml-mode anaconda-mode helm helm-projectile
     smart-mode-line rich-minority
     restclient yasnippet
-    paradox irony ranger
+    paradox irony
 
     ;; themes
     noctilux-theme color-theme-sanityinc-tomorrow
     solarized-theme sublime-themes gotham-theme ujelly-theme
     arjen-grey-theme flatland-theme subatomic-theme
     twilight-bright-theme twilight-anti-bright-theme
-    darktooth-theme bubbleberry-theme aurora-theme
+    darktooth-theme bubbleberry-theme ;; aurora-theme
     dracula-theme
     ))
 
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
+
+(require 'use-package)
 
 (setq use-package-always-ensure t)
 
@@ -34,7 +36,6 @@
 
 (use-package prodigy
   :commands prodigy
-  :ensure t
   :config
   (load-file (expand-file-name "personal/prodigy-service-defs.el"
                                user-emacs-directory)))
@@ -67,9 +68,8 @@
 (x-focus-frame nil)
 (setq ns-pop-up-frames nil)
 
-(global-set-key (kbd "s-A") 'ag-project-files)
+(global-set-key (kbd "s-A") 'counsel-rg)
 (global-set-key (kbd "C-c C-SPC") 'avy-goto-char)
-(setq ag-highlight-search t)
 
 (setq flx-ido-threshold 1000)
 
@@ -162,8 +162,6 @@
   ;;; auto-revert-mode, unmodifide file which are modified outside of emacs gets autoreloaded.
                                               ) "\\|"))
 
-;; (require 'web-mode)
-;; (add-to-list 'auto-mode-alist '("\\.asp$" . web-mode))
 (setq-default c-basic-offset 2
               tab-width 2
               indent-tabs-mode 'f)
@@ -182,7 +180,7 @@
 ;; svn find file projectile overide.
 (custom-set-variables '(projectile-svn-command "find . -type f -print0"))
 
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 (setq racer-cmd "/Users/vigneshS/.cargo/bin/racer")
 (setq racer-rust-src-path "/Users/vigneshS/code/rust/src/")
@@ -236,3 +234,38 @@
   (setq
    pipenv-projectile-after-switch-function
    #'pipenv-projectile-after-switch-extended))
+
+(use-package kubernetes
+  :defer t
+  :config
+  (use-package kubernetes-tramp
+    :defer t))
+
+(use-package web-mode
+  :defer t
+  :mode ("\\.phtml\\'"
+         "\\.html\\'"
+         "\\.tpl\\.php\\'"
+         "\\.[agj]sp\\'"
+         "\\.as[cp]x\\'"
+         "\\.erb\\'"
+         "\\.mustache\\'"
+         "\\.djhtml\\'" ))
+
+(use-package spaceline
+  :config
+  (require 'spaceline-config)
+  (spaceline-emacs-theme))
+
+(use-package spaceline-all-the-icons
+  :after spaceline
+  :config
+  (setq spaceline-all-the-icons-separator-type 'none)
+  (spaceline-all-the-icons-theme)
+  (spaceline-all-the-icons--setup-paradox))
+
+(use-package smex)
+
+(setq ivy-initial-inputs-alist nil) ;; removes ^, which makes the search regex
+;; (setq max-lisp-eval-depth 400) ;;
+;; (toggle-debug-on-error)

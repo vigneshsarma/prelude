@@ -24,6 +24,36 @@
          ("APP_CONFIG" "config/config.dev.edn"))
   :command "lein"
   :args '("ring" "server-headless")
-  :cwd (expand-file-name "Concur/legacy-authn/"
+  :cwd (expand-file-name "Concur/cte-authn/"
+                         (getenv "HOME"))
+  :stop-signal 'sigkill)
+
+(prodigy-define-service
+  :name "oauth2:3000(lein)"
+  :env '(("RELEASE" "prodigy")
+         ("APP_CONFIG" "config/config.dev.properties"))
+  :command "lein"
+  :args '("ring" "server-headless")
+  :cwd (expand-file-name "Concur/oauth2/"
+                         (getenv "HOME"))
+  :stop-signal 'sigkill)
+
+(prodigy-define-service
+  :name "keystore:3000(lein)"
+  :env '(("RELEASE" "prodigy")
+         ("APP_CONFIG" "config/config.dev.properties"))
+  :command "lein"
+  :args '("ring" "do" "clean" "server-headless")
+  :cwd (expand-file-name "Concur/keystore/"
+                         (getenv "HOME"))
+  :stop-signal 'sigkill)
+
+(prodigy-define-service
+  :name "tickets4sale:3010(lein)"
+  ;; :env '(("RELEASE" "prodigy")
+  ;;        ("APP_CONFIG" "config/config.dev.edn"))
+  :command "lein"
+  :args '("ring" "server-headless")
+  :cwd (expand-file-name "Code/tickets4sale/"
                          (getenv "HOME"))
   :stop-signal 'sigkill)
