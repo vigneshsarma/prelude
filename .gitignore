@@ -28,3 +28,8 @@ prelude-cheatsheet.aux
 prelude-cheatsheet.log
 abbrev_defs
 /anaconda-mode
+transient/
+var/
+.cache/
+.lsp-session*
+gotools/
