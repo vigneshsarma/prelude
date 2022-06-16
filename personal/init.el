@@ -7,11 +7,12 @@
  '(use-package jedi
     sphinx-doc ag rvm ido-vertical-mode
     yaml-mode anaconda-mode helm helm-projectile
-    smart-mode-line rich-minority
+    ;; smart-mode-line rich-minority
     restclient yasnippet
     paradox irony
 
     ;; themes
+    material-theme
     noctilux-theme color-theme-sanityinc-tomorrow
     solarized-theme sublime-themes gotham-theme ujelly-theme
     arjen-grey-theme flatland-theme subatomic-theme
@@ -26,6 +27,8 @@
 (require 'use-package)
 
 (setq use-package-always-ensure t)
+
+(setq delete-selection-mode t)
 
 (use-package multiple-cursors
   :defer t
@@ -42,15 +45,18 @@
 
 
 ;; (set-face-attribute 'default nil :height 125 :family "Source Code Pro")
-;; (set-frame-font "Fira-mono-12")
+;; (set-frame-font "Firamono-12")
 ;; (set-frame-font "Hack-12")
-(set-frame-font "Monaco-14")
+;; (set-frame-font "Monaco-14")
+(set-face-attribute 'default nil :height 142 :family "JetBrains Mono")
 ;; (set-face-attribute 'default nil :height 135 :family "Anonymous Pro")
 ;; (set-frame-font "Consolas-13")
 ;; (set-frame-font "Monaco-12")
 ;; (set-frame-font "Inconsolata-14.5")
 (disable-theme 'zenburn)
 (load-theme 'arjen-grey)
+;; (load-theme 'solarized-light)
+;; (load-theme 'material)
 ;; (load-theme 'solarized-dark)
 ;; (load-theme 'sanityinc-tomorrow-eighties)
 ;; (display-time)
@@ -68,7 +74,11 @@
 (x-focus-frame nil)
 (setq ns-pop-up-frames nil)
 
-(global-set-key (kbd "s-A") 'counsel-rg)
+
+(use-package helm-projectile
+  :config
+  (global-set-key (kbd "s-A") 'helm-projectile-rg))
+
 (global-set-key (kbd "C-c C-SPC") 'avy-goto-char)
 
 (setq flx-ido-threshold 1000)
@@ -81,20 +91,22 @@
 (require 'eshell)
 (setq eshell-prompt-function
       (lambda ()
-        (concat (if (s-blank? venv-current-name)
-                    ""
-                    (concat "(" venv-current-name ") "))
+        (concat ;; (if (s-blank? venv-current-name)
+                ;;     ""
+                ;;     (concat "(" venv-current-name ") "))
                 (car (last (s-split "/" (eshell/pwd)))) " $ ")))
 
-(require 'virtualenvwrapper)
-(venv-initialize-interactive-shells) ;; if you want interactive shell support
-(venv-initialize-eshell) ;; if you want eshell support
-(setq venv-location "/Users/vigneshS/.venvs")
+;; (require 'virtualenvwrapper)
+;; (venv-initialize-interactive-shells) ;; if you want interactive shell support
+;; (venv-initialize-eshell) ;; if you want eshell support
+;; (setq venv-location "/Users/vigneshS/.venvs")
+
+(setq ivy-initial-inputs-alist nil) ;; removes ^, which makes the search regex
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
 
-(defun python-insert-encoding-at-point()
+(defun python-insert-encoding-at-point ()
   (interactive)
   (insert "# -*- coding: utf-8 -*-"))
 
@@ -142,25 +154,27 @@
                                   test-ns)))
 (setq cider-test-show-report-on-success t)
 
-(setq clojure-indent-style :always-indent)
+(setq clojure-indent-style :always-align)
 (eval-after-load "clojure-mode"
   '(progn
      (define-clojure-indent
+       (or 0)
+       (and 0)
        (:require 0)
        (:import 0))))
 
-(require 'rich-minority)
-(rich-minority-mode 1)
-(setq rm-blacklist (mapconcat 'identity (list "ws" ;; whitespace-mode
-                                              "guru" ;; warn when using arrow keys and such
-                                              "company" ;; autocomplete
-                                              "Pre" ;; prelude mode
-                                              "ARev"
-                                              "hl-sexp"
-                                              "EditorConfig"
-                                              "ivy"
-  ;;; auto-revert-mode, unmodifide file which are modified outside of emacs gets autoreloaded.
-                                              ) "\\|"))
+;; (require 'rich-minority)
+;; (rich-minority-mode 1)
+;; (setq rm-blacklist (mapconcat 'identity (list "ws" ;; whitespace-mode
+;;                                               "guru" ;; warn when using arrow keys and such
+;;                                               "company" ;; autocomplete
+;;                                               "Pre" ;; prelude mode
+;;                                               "ARev"
+;;                                               "hl-sexp"
+;;                                               "EditorConfig"
+;;                                               "ivy"
+;;   ;;; auto-revert-mode, unmodifide file which are modified outside of emacs gets autoreloaded.
+;;                                               ) "\\|"))
 
 (setq-default c-basic-offset 2
               tab-width 2
@@ -171,6 +185,11 @@
           (lambda ()
             (visual-line-mode)
             (whitespace-mode -1)))
+(use-package ob-http)
+
+(org-babel-do-load-languages 'org-babel-load-languages
+                             '((shell . t)
+                               (http . t)))
 
 ;; Paradox
 (setq paradox-github-token t) ;;"dd4cf72ae0215d68438f42a811ebffe025f6f9df"
@@ -182,19 +201,61 @@
 
 ;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
-(setq racer-cmd "/Users/vigneshS/.cargo/bin/racer")
-(setq racer-rust-src-path "/Users/vigneshS/code/rust/src/")
+;; (setq racer-cmd "/Users/vigneshS/.cargo/bin/racer")
+(setq racer-rust-src-path "/Users/vigneshS/Code/rust/src/")
 
-(add-hook 'rust-mode-hook #'racer-mode)
+
+(require 'compile)
+(require 'rust-mode)
+;; (add-hook 'rust-mode-hook #'racer-mode)
 (add-hook 'rust-mode-hook (lambda ()
+                            (set (make-local-variable 'compile-command)
+                                 "cargo build")
                             (define-key rust-mode-map (kbd "C-c C-c") 'recompile)))
-(add-hook 'racer-mode-hook #'eldoc-mode)
+(with-eval-after-load 'rust-mode
+  ;; Rust Formatter. Run rustfmt before saving rust buffers
+  (setq rust-format-on-save 'f))
 
-(add-hook 'racer-mode-hook #'company-mode)
+(setq lsp-enable-snippet nil)
+
+(use-package lsp-mode
+  :config
+  (add-hook 'rust-mode-hook #'lsp))
+
+(use-package lsp-ui
+  :after lsp-mode)
+
+(use-package company-lsp
+  :init
+  ;; tell company to complete on tabs instead of sitting there like a moron
+  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
+
+(use-package lsp-java
+  :ensure t
+  :init
+  (require 'lsp-java-boot)
+  (add-hook 'lsp-mode-hook #'lsp-lens-mode)
+  :config
+  (add-hook 'java-mode-hook 'lsp))
+
+(use-package dap-mode
+  :ensure t :after lsp-mode
+  :config
+  (dap-mode t)
+  (dap-ui-mode t))
+
+;; (use-package dap-java :after (lsp-java))
+
+
+;; (add-hook 'racer-mode-hook #'eldoc-mode)
+
+;; (add-hook 'racer-mode-hook #'company-mode)
 
 (setq checkdoc-package-keywords-flag nil)
 (setq checkdoc-arguments-in-order-flag nil)
 
+
+(add-hook 'gfm-mode-hook (lambda () (whitespace-mode -1)))
 
 (require 'irony)
 (add-hook 'c++-mode-hook 'irony-mode)
@@ -223,6 +284,9 @@
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
 (setq cider-prompt-for-symbol nil)
+(setq nrepl-log-messages t)
+(setq cider-stacktrace-print-length 30)
+(setq cider-stacktrace-print-level 50)
 
 ;; "ag --line-numbers -S --hidden --color --nogroup %s %s %s"
 ;; (setq helm-grep-ag-command "rg -i --no-heading --line-number %s %s %s")
@@ -252,20 +316,46 @@
          "\\.mustache\\'"
          "\\.djhtml\\'" ))
 
-(use-package spaceline
-  :config
-  (require 'spaceline-config)
-  (spaceline-emacs-theme))
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
-(use-package spaceline-all-the-icons
-  :after spaceline
-  :config
-  (setq spaceline-all-the-icons-separator-type 'none)
-  (spaceline-all-the-icons-theme)
-  (spaceline-all-the-icons--setup-paradox))
+;; (use-package spaceline
+;;   ;; :pin melpa-stable
+;;   :config
+;;   (require 'spaceline-config)
+;;   (spaceline-emacs-theme))
+
+;; (use-package smart-mode-line-powerline-theme)
+
+;; (use-package spaceline-all-the-icons
+;;   :after spaceline
+;;   :config
+;;   (setq spaceline-all-the-icons-separator-type 'none)
+;;   (spaceline-all-the-icons-theme)
+;;   (spaceline-all-the-icons--setup-paradox))
+
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (use-package smex)
 
-(setq ivy-initial-inputs-alist nil) ;; removes ^, which makes the search regex
+(use-package apples-mode)
+
 ;; (setq max-lisp-eval-depth 400) ;;
 ;; (toggle-debug-on-error)
+
+(use-package wsd-mode)
+
+(setq org-startup-with-inline-images t)
+
+(use-package ledger-mode
+  :config
+  (setq ledger-post-auto-adjust-amounts t))
+
+(setq magit-save-repository-buffers 'dontask)
+
+(use-package dhall-mode
+  :defer t
+  :config
+  (setq dhall-type-check-inactivity-timeout 60))
+
+(use-package nov)

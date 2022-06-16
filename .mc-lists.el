@@ -14,7 +14,9 @@
         cider-eval-defun-at-point
         cider-repl-newline-and-indent
         comint-delchar-or-maybe-eof
+        counsel-M-x
         crux-move-beginning-of-line
+        crux-rename-buffer-and-file
         crux-smart-open-line
         crux-top-join-line
         downcase-region
@@ -31,10 +33,13 @@
         ibuffer-mark-for-delete
         indent-for-tab-command
         kill-region
+        kmacro-end-macro
+        ledger-magic-tab
         magit-discard-item
         magit-stage-item
         magit-unstage-item
         markdown-exdent-or-delete
+        markdown-outdent-or-delete
         ns-copy-including-secondary
         nxml-electric-slash
         org-beginning-of-line
@@ -43,6 +48,8 @@
         org-force-self-insert
         org-self-insert-command
         org-todo
+        org-yank
+        package-menu-mark-unmark
         prelude-move-beginning-of-line
         prelude-top-join-line
         puppet-interpolate
@@ -61,6 +68,7 @@
         sp-kill-word
         sp-remove-active-pair-overlay
         sp-splice-sexp
+        swiper
         toggle-comment-region
         yaml-electric-backspace
         yaml-electric-dash-and-dot
@@ -68,6 +76,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+        ace-window
         ido-find-file
         ido-switch-buffer
         isearch-backward-regexp
