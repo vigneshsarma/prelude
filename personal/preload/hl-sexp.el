@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t; -*-
+
 ;;; hl-sexp.el --- highlight current zone according to its context
 
 ;; Copyright (C) 2011-2014 Grégoire Jadi

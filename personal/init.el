@@ -1,25 +1,27 @@
+;; -*- lexical-binding: t; -*-
+
 ;;; init.el --- Personal Initialization file
 ;;; Commentary:
 ;;; Install required packages, set them up for use.
 ;;; code:
 (scroll-bar-mode -1)
-(prelude-ensure-module-deps
- '(use-package jedi
-    sphinx-doc ag rvm ido-vertical-mode
-    yaml-mode anaconda-mode helm helm-projectile
+;; (prelude-ensure-module-deps
+;;  '(use-package jedi
+;;     sphinx-doc ag rvm ido-vertical-mode
+    ;; yaml-mode anaconda-mode helm helm-projectile
     ;; smart-mode-line rich-minority
-    restclient yasnippet
-    paradox irony
+    ;; restclient yasnippet
+    ;;  irony
 
     ;; themes
-    material-theme
-    noctilux-theme color-theme-sanityinc-tomorrow
-    solarized-theme sublime-themes gotham-theme ujelly-theme
-    arjen-grey-theme flatland-theme subatomic-theme
-    twilight-bright-theme twilight-anti-bright-theme
-    darktooth-theme bubbleberry-theme ;; aurora-theme
-    dracula-theme
-    ))
+    ;; material-theme
+    ;; noctilux-theme color-theme-sanityinc-tomorrow
+    ;; solarized-theme sublime-themes gotham-theme ujelly-theme
+    ;; arjen-grey-theme flatland-theme subatomic-theme
+    ;; twilight-bright-theme twilight-anti-bright-theme
+    ;; darktooth-theme bubbleberry-theme ;; aurora-theme
+    ;; dracula-theme
+    ;; ))
 
 (global-set-key [remap move-beginning-of-line]
                 'move-beginning-of-line)
@@ -29,6 +31,25 @@
 (setq use-package-always-ensure t)
 
 (setq delete-selection-mode t)
+
+  ;; aurora-theme
+;; (use-package paradox)
+;; (use-package arjen-grey-theme)
+;; (use-package material-theme)
+;; (use-package noctilux-theme)
+;; (use-package  color-theme-sanityinc-tomorrow)
+;; (use-package solarized-theme)
+;; (use-package sublime-themes)
+;; (use-package gotham-theme)
+;; (use-package ujelly-theme)
+;; (use-package dracula-theme)
+;; (use-package bubbleberry-theme)
+;; (use-package darktooth-theme)
+;; (use-package twilight-anti-bright-theme)
+;; (use-package twilight-bright-theme)
+;; (use-package twilight-bright-theme)
+;; (use-package subatomic-theme)
+;; (use-package flatland-theme)
 
 (use-package multiple-cursors
   :defer t
@@ -44,22 +65,53 @@
                                user-emacs-directory)))
 
 
+(use-package ligature
+  :config
+  (ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
+                                       ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+                                       "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+                                       "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+                                       "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+                                       "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+                                       "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+                                       "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+                                       "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+                                       "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+  (global-ligature-mode t))
+
 ;; (set-face-attribute 'default nil :height 125 :family "Source Code Pro")
 ;; (set-frame-font "Firamono-12")
 ;; (set-frame-font "Hack-12")
 ;; (set-frame-font "Monaco-14")
-(set-face-attribute 'default nil :height 142 :family "JetBrains Mono")
+;; (set-face-attribute 'default nil :height 142 :family "JetBrains Mono")
 ;; (set-face-attribute 'default nil :height 135 :family "Anonymous Pro")
 ;; (set-frame-font "Consolas-13")
-;; (set-frame-font "Monaco-12")
+;; (set-frame-font "Monaco-13")
+;; (set-frame-font "Fira Code-13")
+(set-frame-font "Cascadia Code-12")
+;; (set-frame-font "Jetbrains Mono-13")
+
 ;; (set-frame-font "Inconsolata-14.5")
 (disable-theme 'zenburn)
-(load-theme 'arjen-grey)
+;; (load-theme 'arjen-grey)
 ;; (load-theme 'solarized-light)
 ;; (load-theme 'material)
 ;; (load-theme 'solarized-dark)
 ;; (load-theme 'sanityinc-tomorrow-eighties)
 ;; (display-time)
+;; (disable-theme 'arjen-grey)
+
+;; (use-package apropospriate-theme
+;;   :ensure t
+;;   :config
+;;   ;; (load-theme 'apropospriate-light t)
+;;   ;; or
+;;   (load-theme 'apropospriate-dark t))
+
+(use-package nord-theme
+  :ensure t
+  :config
+  (load-theme 'nord t))
 
 ;; (add-hook 'python-mode-hook 'jedi:setup)
 (add-hook 'python-mode-hook (lambda ()
@@ -74,9 +126,9 @@
 (x-focus-frame nil)
 (setq ns-pop-up-frames nil)
 
-
 (use-package helm-projectile
   :config
+  (setq helm-projectile-ignore-strategy 'search-tool)
   (global-set-key (kbd "s-A") 'helm-projectile-rg))
 
 (global-set-key (kbd "C-c C-SPC") 'avy-goto-char)
@@ -155,13 +207,21 @@
 (setq cider-test-show-report-on-success t)
 
 (setq clojure-indent-style :always-align)
-(eval-after-load "clojure-mode"
-  '(progn
-     (define-clojure-indent
-       (or 0)
-       (and 0)
-       (:require 0)
-       (:import 0))))
+(with-eval-after-load 'clojure-mode
+  (define-clojure-indent
+   (or 0)
+   (and 0)
+   (:require 0)
+   (:import 0)
+
+   (facts 1)
+   (fact 1)
+   (mlet 1)
+   (state! 1)
+   (with-redefs 1)
+   (with-latency-log 2)
+   (has-entries 1)
+   (future-via 1)))
 
 ;; (require 'rich-minority)
 ;; (rich-minority-mode 1)
@@ -199,79 +259,12 @@
 ;; svn find file projectile overide.
 (custom-set-variables '(projectile-svn-command "find . -type f -print0"))
 
-;; (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-
-;; (setq racer-cmd "/Users/vigneshS/.cargo/bin/racer")
-(setq racer-rust-src-path "/Users/vigneshS/Code/rust/src/")
-
-
-(require 'compile)
-(require 'rust-mode)
-;; (add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'rust-mode-hook (lambda ()
-                            (set (make-local-variable 'compile-command)
-                                 "cargo build")
-                            (define-key rust-mode-map (kbd "C-c C-c") 'recompile)))
-(with-eval-after-load 'rust-mode
-  ;; Rust Formatter. Run rustfmt before saving rust buffers
-  (setq rust-format-on-save 'f))
-
 (setq lsp-enable-snippet nil)
-
-(use-package lsp-mode
-  :config
-  (add-hook 'rust-mode-hook #'lsp))
-
-(use-package lsp-ui
-  :after lsp-mode)
-
-(use-package company-lsp
-  :init
-  ;; tell company to complete on tabs instead of sitting there like a moron
-  (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
-
-(use-package lsp-java
-  :ensure t
-  :init
-  (require 'lsp-java-boot)
-  (add-hook 'lsp-mode-hook #'lsp-lens-mode)
-  :config
-  (add-hook 'java-mode-hook 'lsp))
-
-(use-package dap-mode
-  :ensure t :after lsp-mode
-  :config
-  (dap-mode t)
-  (dap-ui-mode t))
-
-;; (use-package dap-java :after (lsp-java))
-
-
-;; (add-hook 'racer-mode-hook #'eldoc-mode)
-
-;; (add-hook 'racer-mode-hook #'company-mode)
 
 (setq checkdoc-package-keywords-flag nil)
 (setq checkdoc-arguments-in-order-flag nil)
 
-
 (add-hook 'gfm-mode-hook (lambda () (whitespace-mode -1)))
-
-(require 'irony)
-(add-hook 'c++-mode-hook 'irony-mode)
-(add-hook 'c-mode-hook 'irony-mode)
-(add-hook 'objc-mode-hook 'irony-mode)
-
-;; replace the `completion-at-point' and `complete-symbol' bindings in
-;; irony-mode's buffers by irony-mode's function
-(defun my-irony-mode-hook ()
-  (define-key irony-mode-map [remap completion-at-point]
-    'irony-completion-at-point-async)
-  (define-key irony-mode-map [remap complete-symbol]
-    'irony-completion-at-point-async))
-(add-hook 'irony-mode-hook 'my-irony-mode-hook)
-(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-
 
 ;; scroll one line at a time (less "jumpy" than defaults)
 
@@ -291,19 +284,12 @@
 ;; "ag --line-numbers -S --hidden --color --nogroup %s %s %s"
 ;; (setq helm-grep-ag-command "rg -i --no-heading --line-number %s %s %s")
 
-;; (setq sql-port 3306) ;; default MySQL port
-(use-package pipenv
-  :hook (python-mode . pipenv-mode)
-  :init
-  (setq
-   pipenv-projectile-after-switch-function
-   #'pipenv-projectile-after-switch-extended))
-
-(use-package kubernetes
-  :defer t
-  :config
-  (use-package kubernetes-tramp
-    :defer t))
+;; (use-package pipenv
+;;   :hook (python-mode . pipenv-mode)
+;;   :init
+;;   (setq
+;;    pipenv-projectile-after-switch-function
+;;    #'pipenv-projectile-after-switch-extended))
 
 (use-package web-mode
   :defer t
@@ -319,26 +305,9 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 
-;; (use-package spaceline
-;;   ;; :pin melpa-stable
-;;   :config
-;;   (require 'spaceline-config)
-;;   (spaceline-emacs-theme))
-
-;; (use-package smart-mode-line-powerline-theme)
-
-;; (use-package spaceline-all-the-icons
-;;   :after spaceline
-;;   :config
-;;   (setq spaceline-all-the-icons-separator-type 'none)
-;;   (spaceline-all-the-icons-theme)
-;;   (spaceline-all-the-icons--setup-paradox))
-
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
 (use-package smex)
-
-(use-package apples-mode)
 
 ;; (setq max-lisp-eval-depth 400) ;;
 ;; (toggle-debug-on-error)
@@ -359,3 +328,23 @@
   (setq dhall-type-check-inactivity-timeout 60))
 
 (use-package nov)
+
+(use-package jwt
+  :defer t)
+
+(setq inferior-lisp-program "ros run")
+
+(use-package compile-angel
+  :ensure t
+  :demand t
+  :config
+  ;; Set `compile-angel-verbose' to nil to disable compile-angel messages.
+  ;; (When set to nil, compile-angel won't show which file is being compiled.)
+  ;; (setq compile-angel-verbose t)
+
+  ;; Uncomment the line below to compile automatically when an Elisp file is saved
+  ;; (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode)
+
+  ;; A global mode that compiles .el files before they are loaded
+  ;; using `load' or `require'.
+  (compile-angel-on-load-mode 1))

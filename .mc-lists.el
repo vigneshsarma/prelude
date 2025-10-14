@@ -77,8 +77,11 @@
 (setq mc/cmds-to-run-once
       '(
         ace-window
+        counsel-find-file
+        crux-kill-line-backwards
         ido-find-file
         ido-switch-buffer
         isearch-backward-regexp
         magit-status
+        org-return-and-maybe-indent
         ))
